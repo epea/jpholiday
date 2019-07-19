@@ -2,11 +2,11 @@ package jp.co.epea.jpholiday;
 
 import java.time.LocalDate;
 
-public class Holiday {
+public class JPHoliday {
 	private LocalDate date;
 	private String name;
 	
-	public Holiday(LocalDate date, String name) {
+	public JPHoliday(LocalDate date, String name) {
 		super();
 		this.date = date;
 		this.name = name;

@@ -17,7 +17,7 @@ class LoaderTest {
 	 */
 	@Test
 	void loadTest() throws JPHolidayException {
-		List<Holiday> holidays = new Loader().load();
+		List<JPHoliday> holidays = new Loader().load();
 		assertNotNull(holidays);
 		assertAll("load", 
 			() -> assertTrue(0 < holidays.size()), 

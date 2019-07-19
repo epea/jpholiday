@@ -18,25 +18,25 @@ public class Loader {
 
 	private static DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-	public List<Holiday> load() throws JPHolidayException {
+	public List<JPHoliday> load() throws JPHolidayException {
 		return load(NAIKAKU_URL);
 	}
 
-	public List<Holiday> load(String targetURL) throws JPHolidayException {
+	public List<JPHoliday> load(String targetURL) throws JPHolidayException {
 		var response = Unirest.get(targetURL).responseEncoding(S_JIS).asString();
 		if (response.getStatus() != HttpStatus.SC_OK)
 			throw new JPHolidayException(String.format("statuscode[%d]", response.getStatus()));
 		return parse(response.getBody());
 	}
 
-	private List<Holiday> parse(String apiResponse) {
+	private List<JPHoliday> parse(String apiResponse) {
 		return Stream.of(apiResponse.split("\r\n")).skip(1).map(Loader::map).collect(Collectors.toList());
 	}
 
-	private static Holiday map(String value) {
+	private static JPHoliday map(String value) {
 		assert (value != null) : "value must not be null.";
 		assert (value.matches("\\d{4}-\\d{2}-\\d{2},.+")) : String.format("正規表現エラー [%s]", value);
 		String[] array = value.split(",");
-		return new Holiday(LocalDate.parse(array[0], df), array[1]);
+		return new JPHoliday(LocalDate.parse(array[0], df), array[1]);
 	}
 }

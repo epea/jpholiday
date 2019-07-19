@@ -11,7 +11,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class LoaderTest {
 
-	// 接続先はHTTP.OKを返す前提
+	/*
+	 * 内閣の外部APIをコール
+	 * 接続先はHTTP.OKを返す前提
+	 */
 	@Test
 	void loadTest() throws JPHolidayException {
 		List<Holiday> holidays = new Loader().load();

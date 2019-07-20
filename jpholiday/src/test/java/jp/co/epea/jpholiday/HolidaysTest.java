@@ -9,7 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class LoaderTest {
+class HolidaysTest {
 
 	/*
 	 * 内閣の外部APIをコール
@@ -17,7 +17,7 @@ class LoaderTest {
 	 */
 	@Test
 	void loadTest() throws JPHolidayException {
-		List<JPHoliday> holidays = new Loader().load();
+		List<JPHoliday> holidays = new Holidays().load();
 		assertNotNull(holidays);
 		assertAll("load", 
 			() -> assertTrue(0 < holidays.size()), 

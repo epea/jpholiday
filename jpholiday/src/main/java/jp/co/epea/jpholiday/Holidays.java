@@ -10,7 +10,7 @@ import org.apache.http.HttpStatus;
 
 import kong.unirest.Unirest;
 
-public class Loader {
+public class Holidays {
 
 	private static final String NAIKAKU_URL = "https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu_kyujitsu.csv";
 
@@ -30,7 +30,7 @@ public class Loader {
 	}
 
 	private List<JPHoliday> parse(String apiResponse) {
-		return Stream.of(apiResponse.split("\r\n")).skip(1).map(Loader::map).collect(Collectors.toList());
+		return Stream.of(apiResponse.split("\r\n")).skip(1).map(Holidays::map).collect(Collectors.toList());
 	}
 
 	private static JPHoliday map(String value) {

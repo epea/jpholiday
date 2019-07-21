@@ -1,5 +1,10 @@
 package jp.co.epea.jpholiday;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -26,10 +31,11 @@ public class Holidays {
 			throw new JPHolidayException(String.format("statuscode[%d]", response.getStatus()));
 		this.jpHolidays = parse(response.getBody());
 	}
-	
+
 	public List<JPHoliday> getJPHolidays() throws JPHolidayException {
-		if( jpHolidays == null ) load();
-		return this.jpHolidays;
+		if (jpHolidays == null)
+			load();
+		return deepcopy(this.jpHolidays);
 	}
 
 	private List<JPHoliday> parse(String apiResponse) {
@@ -41,5 +47,16 @@ public class Holidays {
 		assert (value.matches("\\d{4}-\\d{2}-\\d{2},.+")) : String.format("正規表現エラー [%s]", value);
 		String[] array = value.split(",");
 		return new JPHoliday(LocalDate.parse(array[0], df), array[1]);
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> T deepcopy(T obj) throws JPHolidayException {
+		try {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			new ObjectOutputStream(baos).writeObject(obj);
+			return (T) new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray())).readObject();
+		} catch (IOException | ClassNotFoundException e) {
+			throw new JPHolidayException(e);
+		}
 	}
 }

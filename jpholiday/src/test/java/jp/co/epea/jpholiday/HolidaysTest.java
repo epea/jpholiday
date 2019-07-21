@@ -25,8 +25,9 @@ class HolidaysTest {
 			() -> assertNotNull(jpHolidays.get(0).getDate()),
 			() -> assertNotNull(jpHolidays.get(0).getName())
 		);
+		
+		String old = jpHolidays.get(0).getName();
+		jpHolidays.get(0).setName("deepcopy確認");
+		assertEquals(old,holidays.getJPHolidays().get(0).getName());
 	}
-	
-	
-
 }

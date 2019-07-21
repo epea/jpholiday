@@ -18,15 +18,18 @@ public class Holidays {
 
 	private static DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-	public List<JPHoliday> load() throws JPHolidayException {
-		return load(NAIKAKU_URL);
-	}
+	private List<JPHoliday> jpHolidays;
 
-	public List<JPHoliday> load(String targetURL) throws JPHolidayException {
-		var response = Unirest.get(targetURL).responseEncoding(S_JIS).asString();
+	public void load() throws JPHolidayException {
+		var response = Unirest.get(NAIKAKU_URL).responseEncoding(S_JIS).asString();
 		if (response.getStatus() != HttpStatus.SC_OK)
 			throw new JPHolidayException(String.format("statuscode[%d]", response.getStatus()));
-		return parse(response.getBody());
+		this.jpHolidays = parse(response.getBody());
+	}
+	
+	public List<JPHoliday> getJPHolidays() throws JPHolidayException {
+		if( jpHolidays == null ) load();
+		return this.jpHolidays;
 	}
 
 	private List<JPHoliday> parse(String apiResponse) {

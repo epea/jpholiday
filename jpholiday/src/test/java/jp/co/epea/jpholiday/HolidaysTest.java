@@ -17,12 +17,13 @@ class HolidaysTest {
 	 */
 	@Test
 	void loadTest() throws JPHolidayException {
-		List<JPHoliday> holidays = new Holidays().load();
-		assertNotNull(holidays);
-		assertAll("load", 
-			() -> assertTrue(0 < holidays.size()), 
-			() -> assertNotNull(holidays.get(0).getDate()),
-			() -> assertNotNull(holidays.get(0).getName())
+		Holidays holidays = new Holidays();
+		List<JPHoliday> jpHolidays = holidays.getJPHolidays();
+		assertNotNull(jpHolidays);
+		assertAll("getJPHolidays", 
+			() -> assertTrue(0 < jpHolidays.size()), 
+			() -> assertNotNull(jpHolidays.get(0).getDate()),
+			() -> assertNotNull(jpHolidays.get(0).getName())
 		);
 	}
 

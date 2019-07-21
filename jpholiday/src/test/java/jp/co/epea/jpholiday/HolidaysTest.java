@@ -16,7 +16,7 @@ class HolidaysTest {
 	 * 接続先はHTTP.OKを返す前提
 	 */
 	@Test
-	void loadTest() throws JPHolidayException {
+	void getJPHolidays() throws JPHolidayException {
 		Holidays holidays = new Holidays();
 		List<JPHoliday> jpHolidays = holidays.getJPHolidays();
 		assertNotNull(jpHolidays);
@@ -26,5 +26,7 @@ class HolidaysTest {
 			() -> assertNotNull(jpHolidays.get(0).getName())
 		);
 	}
+	
+	
 
 }

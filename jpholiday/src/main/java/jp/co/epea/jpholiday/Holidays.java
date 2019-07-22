@@ -33,8 +33,7 @@ public class Holidays {
 	}
 
 	public List<JPHoliday> getJPHolidays() throws JPHolidayException {
-		if (jpHolidays == null)
-			load();
+		if (jpHolidays == null) load();
 		return deepcopy(this.jpHolidays);
 	}
 
@@ -58,5 +57,10 @@ public class Holidays {
 		} catch (IOException | ClassNotFoundException e) {
 			throw new JPHolidayException(e);
 		}
+	}
+	
+	public boolean isJPHoliday(LocalDate date) throws JPHolidayException {
+		if (jpHolidays == null) load();
+		return jpHolidays.stream().anyMatch(s -> s.getDate().isEqual(date));
 	}
 }

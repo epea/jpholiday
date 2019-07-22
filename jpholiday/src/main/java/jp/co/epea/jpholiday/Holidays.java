@@ -50,7 +50,7 @@ public class Holidays {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <T> T deepcopy(T obj) throws JPHolidayException {
+	private static <T> T deepcopy(T obj) throws JPHolidayException {
 		try {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			new ObjectOutputStream(baos).writeObject(obj);

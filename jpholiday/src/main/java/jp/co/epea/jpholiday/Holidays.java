@@ -25,14 +25,14 @@ public class Holidays {
 
 	private List<JPHoliday> jpHolidays;
 
-	public void load() throws JPHolidayException {
+	public synchronized void load() throws JPHolidayException {
 		var response = Unirest.get(NAIKAKU_URL).responseEncoding(S_JIS).asString();
 		if (response.getStatus() != HttpStatus.SC_OK)
 			throw new JPHolidayException(String.format("statuscode[%d]", response.getStatus()));
 		this.jpHolidays = parse(response.getBody());
 	}
 
-	public List<JPHoliday> getJPHolidays() throws JPHolidayException {
+	public synchronized List<JPHoliday> getJPHolidays() throws JPHolidayException {
 		if (jpHolidays == null) load();
 		return deepcopy(this.jpHolidays);
 	}
@@ -59,7 +59,7 @@ public class Holidays {
 		}
 	}
 	
-	public boolean isJPHoliday(LocalDate date) throws JPHolidayException {
+	public synchronized boolean isJPHoliday(LocalDate date) throws JPHolidayException {
 		if (jpHolidays == null) load();
 		return jpHolidays.stream().anyMatch(s -> s.getDate().isEqual(date));
 	}

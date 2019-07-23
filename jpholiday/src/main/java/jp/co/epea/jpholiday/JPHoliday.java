@@ -7,9 +7,10 @@ public class JPHoliday implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7636930831777515330L;
+	private static final long serialVersionUID = -4699496678215224180L;
 
 	private LocalDate date;
+	
 	private String name;
 
 	public JPHoliday(LocalDate date, String name) {
@@ -22,7 +23,7 @@ public class JPHoliday implements Serializable {
 		return date;
 	}
 
-	public void setDate(LocalDate date) {
+	void setDate(LocalDate date) {
 		this.date = date;
 	}
 
@@ -30,7 +31,7 @@ public class JPHoliday implements Serializable {
 		return name;
 	}
 
-	public void setName(String name) {
+	void setName(String name) {
 		this.name = name;
 	}
 

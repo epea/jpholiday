@@ -11,6 +11,28 @@
 	<name>jpholiday</name>
 	<url>http://maven.apache.org</url>
 
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Yoshitake Kitamura</name>
+			<email>kitamura@epea.co.jp</email>
+			<organization>Epea co ltd</organization>
+			<organizationUrl>https://github.com/epea</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:git://github.com:epea/jpholiday.git</connection>
+		<developerConnection>scm:git:ssh://github.com:epea/jpholiday.git</developerConnection>
+		<url>http://github.com/epea/jpholiday/tree/master</url>
+	</scm>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

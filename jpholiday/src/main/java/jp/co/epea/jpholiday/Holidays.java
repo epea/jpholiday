@@ -15,16 +15,40 @@ import org.apache.http.HttpStatus;
 
 import kong.unirest.Unirest;
 
+/**
+ * 休日情報処理クラス.
+ * 内閣が祝日を発表するのは向こう一年未満の模様（未確認）
+ * 
+ * @author yoshitake
+ *
+ */
 public class Holidays {
 
+	/**
+	 * 内閣APIのURL.
+	 */
 	private static final String NAIKAKU_URL = "https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu_kyujitsu.csv";
 
+	/**
+	 * 内閣APIの文字コード.
+	 */
 	private static final String S_JIS = "SHIFT-JIS";
 
+	/**
+	 * 内閣APIの日付けフォーマット.
+	 */
 	private static DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+	/**
+	 * 休日情報保持用リスト.
+	 */
 	private List<JPHoliday> jpHolidays;
 
+	/**
+	 * 読み込み処理.
+	 * 
+	 * @throws JPHolidayException 主に接続先がHTTP.OK以外
+	 */
 	public synchronized void load() throws JPHolidayException {
 		var response = Unirest.get(NAIKAKU_URL).responseEncoding(S_JIS).asString();
 		if (response.getStatus() != HttpStatus.SC_OK)
@@ -32,6 +56,12 @@ public class Holidays {
 		this.jpHolidays = parse(response.getBody());
 	}
 
+	/**
+	 * 休日情報保持用リストを取得する.
+	 * 
+	 * @return 休日情報保持用リスト(deepcopy)
+	 * @throws JPHolidayException 例外発生
+	 */
 	public synchronized List<JPHoliday> getJPHolidays() throws JPHolidayException {
 		if (jpHolidays == null) load();
 		return deepcopy(this.jpHolidays);
@@ -59,6 +89,13 @@ public class Holidays {
 		}
 	}
 	
+	/**
+	 * 指定日が祝日か判定する.
+	 * 
+	 * @param date 指定日
+	 * @return true:祝日/false:祝日以外
+	 * @throws JPHolidayException 例外発生
+	 */
 	public synchronized boolean isJPHoliday(LocalDate date) throws JPHolidayException {
 		if (jpHolidays == null) load();
 		return jpHolidays.stream().anyMatch(s -> s.getDate().isEqual(date));
